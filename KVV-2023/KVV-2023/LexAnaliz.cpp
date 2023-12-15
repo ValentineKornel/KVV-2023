@@ -5,8 +5,14 @@
 #include<string>
 
 int DecimicalNotation(std::string input, int scaleofnot) {
-	std::string num = input.substr(1, input.size());
-	return std::stoi(num, nullptr, scaleofnot);
+	std::string num = input.substr(2, input.size());
+	if (input[0] == '0') {
+		return std::stoi(num, nullptr, scaleofnot);
+	}
+	else {
+		return std::stoi(num, nullptr, scaleofnot) * (-1);
+	}
+	//return std::stoi(num, nullptr, scaleofnot);
 }
 namespace Lexer
 {
@@ -317,12 +323,12 @@ namespace Lexer
 						}
 						case LEX_RIGHTTHESIS:	// закрывающая скобка
 						{
-							if (!isParam)
+							/*if (!isParam)
 							{
 								lex_ok = false;
 								Log::writeError(log.stream, Error::GetError(317, curline, 0));
 								break;
-							}
+							}*/
 							isParam = false;
 							// конец области видимости
 							if (*in.words[i - 1].word == LEX_LEFTHESIS || (i > 2 && (tables.lextable.table[tables.lextable.size - 2].lexema == LEX_ID_TYPE)))
@@ -357,16 +363,55 @@ namespace Lexer
 					}
 					case LEX_LITERAL_NUMO:
 					{
-
-
 						int value = DecimicalNotation(curword, 8);
+						char buffer[5];
+						sprintf(buffer, "%d", value);
+						strcpy_s(curword, buffer);
+						lexema = 'l';
 
-						if (value < NUM_MINSIZE || value > NUM_MAXSIZE)
+						char id[STR_MAXSIZE] = "";
+						idxTI = NULLDX_TI;  // индекс идентификатора в ТИ
+						char* idtype = in.words[i - 1].word;
+						if (!scopes.empty())
+							strncpy_s(id, scopes.top(), MAXSIZE_ID);
+						strncat(id, curword, MAXSIZE_ID);
+						if (isLiteral(curword))
+							strcpy_s(id, curword); // литерал заменяется своим значением
+
+						IT::Entry* itentry = getEntry(tables, lexema, id, idtype, isParam, isFunc, log, curline, lex_ok);
+						if (itentry != nullptr) // первая встреча - объявление
+						{
+							IT::Add(tables.idtable, *itentry);
+							idxTI = tables.idtable.size - 1;
+						}
+						else // повторный идентификатор (уже есть)
+						{
+							int i = tables.lextable.size - 1; // попытка переопределить идентификатор
+							if (i > 0 && tables.lextable.table[i - 1].lexema == LEX_NEW || tables.lextable.table[i].lexema == LEX_NEW
+								|| tables.lextable.table[i - 1].lexema == LEX_FUNCTION || tables.lextable.table[i].lexema == LEX_FUNCTION
+								|| tables.lextable.table[i - 1].lexema == LEX_ID_TYPE || tables.lextable.table[i].lexema == LEX_ID_TYPE
+								|| tables.lextable.table[i - 1].lexema == LEX_PROCEDURE || tables.lextable.table[i].lexema == LEX_PROCEDURE)
+							{
+								Log::writeError(log.stream, Error::GetError(305, curline, 0));
+								lex_ok = false;
+							}
+							idxTI = IT::isId(tables.idtable, id);	// индекс существующего идентификатора
+							if (lexema == LEX_LITERAL)
+								idxTI = getLiteralIndex(tables.idtable, curword, getType(id, in.words[i - 1].word)); // или литерала
+						}
+
+						break;
+
+						//нужно прикрутить это к некст кейсу
+						//int value = DecimicalNotation(curword, 8);
+
+						/*if (value < NUM_MINSIZE || value > NUM_MAXSIZE)
 							throw ERROR_THROW(204);
 						tables.idtable.table[tables.idtable.size - 1].value.vint = value;
 
 						LT::Entry entrylt(graphs[j].lexema, in.words[i].line);
-						break;
+						break;*/
+
 					}
 					case LEX_ID:
 					case LEX_LITERAL:

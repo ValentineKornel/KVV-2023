@@ -157,6 +157,9 @@ namespace MFST
 			*log.stream << getDiagnosis(0, buf) << std::endl;
 			*log.stream << getDiagnosis(1, buf) << std::endl;
 			*log.stream << getDiagnosis(2, buf) << std::endl;
+			std::cout << getDiagnosis(0, buf) << std::endl;
+			std::cout << getDiagnosis(1, buf) << std::endl;
+			std::cout << getDiagnosis(2, buf) << std::endl;
 			break;
 		case NS_NORULECHAIN:       MFST_TRACE4(log, "------>NS_NORULECHAIN") break;
 		case NS_ERROR:             MFST_TRACE4(log, "------>NS_ERROR") break;
@@ -208,7 +211,7 @@ namespace MFST
 			MFST_TRACE7(log)
 		};
 	};
-	bool Mfst::savededucation()//вывод дерева разбора
+	bool Mfst::savededucation()
 	{
 		MfstState state;
 		GRB::Rule rule;

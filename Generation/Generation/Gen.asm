@@ -31,9 +31,10 @@ ExitProcess PROTO:DWORD
 		LTRL10 sdword 2
 		LTRL11 byte 'sdvig left:', 0
 		LTRL12 sdword 3
-		LTRL13 sdword 52
-		LTRL14 byte ' ', 0
-		LTRL15 byte ' after cycle ', 0
+		LTRL13 sdword 80
+		LTRL14 sdword 52
+		LTRL15 byte ' ', 0
+		LTRL16 byte ' after cycle ', 0
 .data
 		temp sdword ?
 		buffer byte 256 dup(0)
@@ -230,12 +231,13 @@ push LTRL12
 pop ebx
 mov mainab, ebx
 
+push LTRL13
 
 pop ebx
 mov maind, ebx
 
 mov edx, mainab
-cmp edx, LTRL13
+cmp edx, LTRL14
 
 jnz cycle2
 jmp cyclenext2
@@ -245,7 +247,7 @@ push mainab
 call outnum
 
 
-push offset LTRL14
+push offset LTRL15
 call outstr
 
 push mainab
@@ -264,12 +266,12 @@ pop ebx
 mov mainab, ebx
 
 mov edx, mainab
-cmp edx, LTRL13
+cmp edx, LTRL14
 
 jnz cycle2
 cyclenext2:
 
-push offset LTRL15
+push offset LTRL16
 call outstr
 
 

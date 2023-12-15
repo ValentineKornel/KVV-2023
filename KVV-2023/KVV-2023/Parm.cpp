@@ -21,6 +21,8 @@ namespace Parm
 					wcscpy_s(parm.out, argv[i] + wcslen(PARM_OUT));
 				else if (wcsncmp(argv[i], PARM_LOG, wcslen(PARM_LOG)) == 0)
 					wcscpy_s(parm.log, argv[i] + wcslen(PARM_LOG));
+				else if (wcsncmp(argv[i], PARM_TABLES, wcslen(PARM_TABLES)) == 0)
+					parm.is_pring_tables = true;
 			}
 		}
 
@@ -38,6 +40,8 @@ namespace Parm
 			wcscpy_s(parm.log, parm.in);
 			wcsncat_s(parm.log, PARM_LOG_DEFAULT_EXT, sizeof(PARM_LOG_DEFAULT_EXT));
 		};
+
+
 
 		return parm;
 	};

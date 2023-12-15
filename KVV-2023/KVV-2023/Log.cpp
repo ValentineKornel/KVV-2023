@@ -91,16 +91,27 @@ namespace Log
 		}
 		else
 		{
-			if (e.position.col == -1 || e.position.line == -1)
+			if (e.position.col == -1 || e.position.line == -1) {
 				*stream << std::endl << "Ошибка N" << e.id << ": " << e.message;
-			else if (e.position.col == NULL)
+				std::cout << std::endl << "Ошибка N" << e.id << ": " << e.message;
+
+			}
+			else if (e.position.col == NULL) {
 				*stream << std::endl << "Ошибка N" << e.id << ": " << e.message
-				<< " Строка: " << e.position.line;
-			else
+					<< " Строка: " << e.position.line;
+				std::cout << std::endl << "Ошибка N" << e.id << ": " << e.message
+					<< " Строка: " << e.position.line << std::endl;
+			}
+			else {
 				*stream << std::endl << "Ошибка N" << e.id << ": " << e.message
-				<< " Строка: " << e.position.line
-				<< " Позиция в строке: " << e.position.col;
-			*stream << std::endl;
+					<< " Строка: " << e.position.line
+					<< " Позиция в строке: " << e.position.col;
+				*stream << std::endl;
+				std::cout << std::endl << "Ошибка N" << e.id << ": " << e.message
+					<< " Строка: " << e.position.line
+					<< " Позиция в строке: " << e.position.col;
+				std::cout << std::endl;
+			}
 		}
 	}
 

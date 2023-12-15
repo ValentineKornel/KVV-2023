@@ -29,7 +29,7 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	try
 	{
-
+		cout << std::stoi("120", nullptr, 8) * (-1);
 		Parm::PARM parm = Parm::getparm(argc, argv);                            //получить параметры
 		log = Log::getstream(parm.log);
 		Log::writeLog(log);														//написать заголовок журнала
@@ -85,20 +85,25 @@ int _tmain(int argc, _TCHAR* argv[])
 		LT::writeLexTable(log.stream, tables.lextable);							//записать в журнал новые таблицы лексем и идентификаторов
 		IT::writeIdTable(log.stream, tables.idtable);
 		LT::writeLexemsOnLines(log.stream, tables.lextable);					//а также соответствие токенов и лексем
-		Log::writeLine(&std::cout, MESSAGE, "");
-		IT::writeIdTable(&std::cout, tables.idtable);							//записать в командную строку новые таблицы лексем и идентификаторов 
-		LT::writeLexTable(&std::cout, tables.lextable);							//а также соответствие токенов и лексем
-		LT::writeLexemsOnLines(&std::cout, tables.lextable);
+		if (parm.is_pring_tables) {
+			Log::writeLine(&std::cout, MESSAGE, "");
+			IT::writeIdTable(&std::cout, tables.idtable);							//записать в командную строку новые таблицы лексем и идентификаторов 
+			LT::writeLexTable(&std::cout, tables.lextable);							//а также соответствие токенов и лексем
+			LT::writeLexemsOnLines(&std::cout, tables.lextable);
+		}
+		
 
 		Gener::CodeGeneration(tables, parm, log);								//выполнить генерацию кода
 		Log::writeLine(log.stream, ALLGOOD, "");									//итог работы программы
 		Log::writeLine(&std::cout, ALLGOOD, "");
 		Log::Close(log);													    //закрыть журнал
+		system("D:\\KVV-2023\\KVV-2023\\my.bat");
 	}
 	catch (Error::ERROR e)
 	{
 		Log::writeError(log.stream, e);
 	}
+	
 }
 
 

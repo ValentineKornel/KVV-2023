@@ -226,7 +226,7 @@ namespace Gener
 	void CodeGeneration(Lexer::LEX& tables, Parm::PARM& parm, Log::LOG& log)
 	{
 		vector <string> v = startFillVector(tables);
-		ofstream ofile("..\\..\\Generation\\Generation\\Gen.asm"); //"D:\\KOD\\Generation\\Generation\\Gen.asm"
+		ofstream ofile("..\\..\\Generation\\Generation\\Gen.asm");
 		string funcname;	// имя текущей функции
 		string cyclecode;	// эпилог цикла: cmp + j
 		int pcount;			// количество параметров текущей функции
