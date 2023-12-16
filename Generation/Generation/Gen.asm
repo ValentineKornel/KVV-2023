@@ -19,272 +19,131 @@ ExitProcess PROTO:DWORD
 
 .const
 		newline byte 13, 10, 0
-		LTRL1 sdword 1
-		LTRL2 byte 'Len + 1:', 0
-		LTRL3 byte 'concat:', 0
-		LTRL4 sdword 9
-		LTRL5 sdword -9
-		LTRL6 byte 'Just', 0
-		LTRL7 byte 'string', 0
-		LTRL8 byte '70', 0
-		LTRL9 byte 'from string in number:', 0
-		LTRL10 sdword 2
-		LTRL11 byte 'sdvig left:', 0
-		LTRL12 sdword 3
-		LTRL13 sdword 80
-		LTRL14 sdword 52
-		LTRL15 byte ' ', 0
-		LTRL16 byte ' after cycle ', 0
+		LTRL1 sdword 4
+		LTRL2 sdword 3
+		LTRL3 sdword 80
+		LTRL4 byte 'true', 0
+		LTRL5 sdword 0
+		LTRL6 byte 'str', 0
+		LTRL7 byte 'a', 0
+		LTRL8 byte 'b', 0
+		LTRL9 byte 'F', 0
+		LTRL10 byte '2', 0
+		LTRL11 sdword 10
 .data
 		temp sdword ?
 		buffer byte 256 dup(0)
-		minres sdword 0
-		standk sdword 0
-		standstr dword ?
-		mainx sdword 0
-		mainy sdword 0
-		mainstrx dword ?
-		mainstry dword ?
-		mainstrz dword ?
-		maine sdword 0
-		mainresult sdword 0
-		maint sdword 0
-		mainab sdword 0
-		maind sdword 0
+		mainm sdword 0
+		maink sdword 0
+		mainstr dword ?
+		mainj sdword 0
+		mainr sdword 0
 .code
-
-;----------- min ------------
-min PROC,
-	minx : sdword, miny : sdword  
-; --- save registers ---
-push ebx
-push edx
-; ----------------------
-mov edx, minx
-cmp edx, miny
-
-jl right1
-jg wrong1
-right1:
-push minx
-
-pop ebx
-mov minres, ebx
-
-jmp next1
-wrong1:
-push miny
-
-pop ebx
-mov minres, ebx
-
-next1:
-; --- restore registers ---
-pop edx
-pop ebx
-; -------------------------
-mov eax, minres
-ret
-min ENDP
-;------------------------------
-
-
-;----------- stand ------------
-stand PROC,
-	standa : dword, standb : dword  
-; --- save registers ---
-push ebx
-push edx
-; ----------------------
-
-push standa
-push offset buffer
-call lenght
-push eax
-push LTRL1
-pop ebx
-pop eax
-add eax, ebx
-push eax
-
-pop ebx
-mov standk, ebx
-
-
-push offset LTRL2
-call outstr
-
-
-push standk
-call outnum
-
-push offset newline
-call outstr
-
-
-push standb
-push standa
-push offset buffer
-call concat
-mov standstr, eax
-
-push offset LTRL3
-call outstr
-
-
-push standstr
-call outstr
-
-push offset newline
-call outstr
-
-; --- restore registers ---
-pop edx
-pop ebx
-; -------------------------
-ret
-stand ENDP
-;------------------------------
-
 
 ;----------- MAIN ------------
 main PROC
-push LTRL4
+push LTRL1
 
 pop ebx
-mov mainx, ebx
+mov mainm, ebx
+
+mov edx, LTRL2
+cmp edx, LTRL3
+
+jl right1
+jmp next1
+right1:
+
+push offset LTRL4
+call outstr
+
+next1:
+push LTRL5
+
+pop ebx
+mov maink, ebx
+
+
+push offset LTRL6
+push offset buffer
+call lenght
+push eax
+
+pop ebx
+mov maink, ebx
+
+push offset newline
+call outstr
+
+
+push maink
+call outnum
+
+mov mainstr, offset LTRL7
+
+push offset LTRL8
+push mainstr
+push offset buffer
+call concat
+mov mainstr, eax
+push offset newline
+call outstr
+
+
+push mainstr
+call outstr
 
 push LTRL5
 
 pop ebx
-mov mainy, ebx
+mov mainj, ebx
 
-mov mainstrx, offset LTRL6
-mov mainstry, offset LTRL7
-mov mainstrz, offset LTRL8
 
 push offset LTRL9
-call outstr
-
-
-push mainstrz
 push offset buffer
 call atoii
 push eax
 
 pop ebx
-mov maine, ebx
-
-
-push maine
-call outnum
+mov mainj, ebx
 
 push offset newline
 call outstr
 
-push mainx
+
+push mainj
+call outnum
+
+push LTRL5
+
+pop ebx
+mov mainr, ebx
+
+
+push offset LTRL10
+push offset buffer
+call atoii
+push eax
 push LTRL1
-pop ebx 
-pop eax 
-mov cl, bl 
-shl eax, cl
-push eax
-push LTRL10
-pop ebx 
-pop eax 
-mov cl, bl 
-shl eax, cl
-push eax
-
-pop ebx
-mov mainresult, ebx
-
-
-push offset LTRL11
-call outstr
-
-
-push mainresult
-call outnum
-
-push offset newline
-call outstr
-
-
-push mainy
-push mainx
-call min
-push eax
-
-pop ebx
-mov maint, ebx
-
-
-push maint
-call outnum
-
-push offset newline
-call outstr
-
-push LTRL12
-
-pop ebx
-mov mainab, ebx
-
-push LTRL13
-
-pop ebx
-mov maind, ebx
-
-mov edx, mainab
-cmp edx, LTRL14
-
-jnz cycle2
-jmp cyclenext2
-cycle2:
-
-push mainab
-call outnum
-
-
-push offset LTRL15
-call outstr
-
-push mainab
-push LTRL10
-pop ebx
-pop eax
-add eax, ebx
-push eax
-push LTRL10
+push LTRL11
 pop ebx
 pop eax
 imul eax, ebx
 push eax
+pop ebx
+pop eax
+add eax, ebx
+push eax
 
 pop ebx
-mov mainab, ebx
-
-mov edx, mainab
-cmp edx, LTRL14
-
-jnz cycle2
-cyclenext2:
-
-push offset LTRL16
-call outstr
-
-
-push mainab
-call outnum
+mov mainr, ebx
 
 push offset newline
 call outstr
 
 
-push mainstry
-push mainstrx
-call stand
+push mainr
+call outnum
 
 push 0
 call ExitProcess

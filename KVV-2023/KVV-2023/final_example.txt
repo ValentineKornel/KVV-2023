@@ -43,7 +43,7 @@ main
         write t;
 	newline;
 	new number ab = 3;
-        new number d = q120;
+        new number d = 0q120;
 	condition: ab ! 52 #
 	cycle [
 		write ab;

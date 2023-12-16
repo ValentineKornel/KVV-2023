@@ -29,7 +29,6 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	try
 	{
-		cout << std::stoi("120", nullptr, 8) * (-1);
 		Parm::PARM parm = Parm::getparm(argc, argv);                            //получить параметры
 		log = Log::getstream(parm.log);
 		Log::writeLog(log);														//написать заголовок журнала

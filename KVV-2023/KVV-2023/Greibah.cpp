@@ -57,10 +57,11 @@ namespace GRB
 			Rule::Chain(3, TS('['), NS('X'), TS(']'))
 		),
 
-		Rule(NS('Z'), GRB_ERROR_SERIES + 9, 3,					// Ошибка в условии цикла/условного выражения	
+		Rule(NS('Z'), GRB_ERROR_SERIES + 9, 4,					// Ошибка в условии цикла/условного выражения	
 			Rule::Chain(3, TS('i'), NS('L'), TS('i')),
 			Rule::Chain(3, TS('i'), NS('L'), TS('l')),
-			Rule::Chain(3, TS('l'), NS('L'), TS('i'))
+			Rule::Chain(3, TS('l'), NS('L'), TS('i')),
+			Rule::Chain(3, TS('l'), NS('L'), TS('l'))               //!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		),
 
 		Rule(NS('L'), GRB_ERROR_SERIES + 10, 4,					// Неверный условный оператор		
