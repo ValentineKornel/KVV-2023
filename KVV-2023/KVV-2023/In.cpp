@@ -13,7 +13,7 @@ namespace In
 		if (!instream.is_open())
 			throw ERROR_THROW(102);
 		IN in;
-		int pos = 0;
+		int pos = 1;
 		bool isLiteral = false;
 		int litcheck = -1;
 		bool forlitchek = true;
@@ -38,8 +38,9 @@ namespace In
 				text[in.size++] = uch;
 				break;
 			case IN::F: // недопустимый символ в исходном файле
-				//Log::writeError(stream, Error::GetError(200, in.lines, pos));
-				Log::writeError(stream, Error::GetError(997, in.lines, pos));
+				Log::writeError(stream, Error::GetError(200, in.lines, pos));
+				exit(1);
+				//Log::writeError(stream, Error::GetError(997, in.lines, pos));
 				in.ignor++;
 				break;
 			case IN::I:// игнорируемый символ 

@@ -82,7 +82,7 @@ namespace Log
 				std::cout << std::endl << "Ошибка N" << e.id << ": " << e.message << std::endl;
 			else if (e.position.col == NULL)
 				std::cout << std::endl << "Ошибка N" << e.id << ": " << e.message
-				<< " Строка: " << e.position.line << std::endl;
+				<< " Строка: " << e.position.line <<  std::endl;
 			else
 				std::cout << std::endl << "Ошибка N" << e.id << ": " << e.message
 				<< " Строка: " << e.position.line

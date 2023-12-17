@@ -1,22 +1,3 @@
 main[
-	new number m = 4;
-	condition: 3 < 0q120 #
-	istrue[write "true";]#
-	
-	new number k = 0;
-	k = lenght("str");
-	newline;
-	write k;
-	new string str = "a";
-	str = concat(str, "b");
-	newline;
-	write str;
-	new number j = 0;
-	j = atoii("F");
-	newline;
-	write j;
-	new number r = 0;
-	r = atoii("2") + 4 * 0q12;
-	newline;
-	write r;
-]
+	new string m = "some";
+	]
