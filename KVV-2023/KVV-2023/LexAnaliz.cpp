@@ -420,8 +420,18 @@ namespace Lexer
 						idxTI = NULLDX_TI;  // индекс идентификатора в ТИ
 						if (*nextword == LEX_LEFTHESIS)
 							isFunc = true;						// идентификатор функции
+						if (scopes.empty() and !isFunc) {
+							Log::writeError(log.stream, Error::GetError(616, curline, 0));
+							lex_ok = false;
+							return lex_ok;
+						}
 						char* idtype = (isFunc && i > 1) ?	// тип идентификатора
 							in.words[i - 2].word : in.words[i - 1].word;		// пропускаем ключевое слово function
+						if (strlen(curword) > MAXSIZE_ID && lexema == 'i') {
+							Log::writeError(log.stream, Error::GetError(204, curline, 0));
+							lex_ok = false;
+							return lex_ok;
+						}
 						if (!isFunc && !scopes.empty())
 							strncpy_s(id, scopes.top(), MAXSIZE_ID);
 						strncat(id, curword, MAXSIZE_ID);

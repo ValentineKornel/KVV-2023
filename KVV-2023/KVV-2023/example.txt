@@ -1,3 +1,35 @@
+number function myNunc()[
+	newline;
+	new string str = "inside function";
+	write str;
+	return 120;
+]
+procedure function me()[newline;write "inside procedure";return;]
+
 main[
-	new string m = "some";
-	]
+	new number mynumber = 120;
+	write mynumber;
+	new number a;
+	a = 4 { 1;
+	newline;
+	write a;
+	new string j = "someslkdfjalksjfksdjflkajslfkjsklj";
+	newline;
+	write j;
+	new number myNum = 5;
+	newline;
+	write myNum;
+	new number k;
+	k = myNunc();
+	newline;
+	write k;
+	new number i = 025;
+	i = 5 + myNunc() / 2;
+	newline;
+	write i ;
+	new number u;
+	u = atoii("123");
+	newline;
+	write u;
+	me();
+]

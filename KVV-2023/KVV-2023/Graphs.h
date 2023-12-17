@@ -18,7 +18,21 @@
 
 
 #define GRAPH_ID 2, \
-	FST::NODE(26,FST::RELATION('a',1),  FST::RELATION('b',1), \
+	FST::NODE(52,\
+			FST::RELATION('A', 1),  FST::RELATION('B', 1), \
+			FST::RELATION('C', 1),  FST::RELATION('D', 1), \
+			FST::RELATION('E', 1),  FST::RELATION('F', 1), \
+			FST::RELATION('G', 1),  FST::RELATION('H', 1), \
+			FST::RELATION('I', 1),  FST::RELATION('J', 1), \
+			FST::RELATION('K', 1),  FST::RELATION('L', 1), \
+			FST::RELATION('M', 1),  FST::RELATION('N', 1), \
+			FST::RELATION('O', 1),  FST::RELATION('P', 1), \
+			FST::RELATION('Q', 1),  FST::RELATION('R', 1), \
+			FST::RELATION('S', 1),  FST::RELATION('T', 1), \
+			FST::RELATION('U', 1),  FST::RELATION('V', 1), \
+			FST::RELATION('W', 1),  FST::RELATION('X', 1), \
+			FST::RELATION('Y', 1),  FST::RELATION('Z', 1), \
+			FST::RELATION('a', 1),  FST::RELATION('b', 1), \
 			FST::RELATION('c', 1),  FST::RELATION('d', 1), \
 			FST::RELATION('e', 1),  FST::RELATION('f', 1), \
 			FST::RELATION('g', 1),  FST::RELATION('h', 1), \
@@ -31,7 +45,21 @@
 			FST::RELATION('u', 1),  FST::RELATION('v', 1), \
 			FST::RELATION('w', 1),  FST::RELATION('x', 1), \
 			FST::RELATION('y', 1),  FST::RELATION('z', 1)), \
-	FST::NODE(26, FST::RELATION('a',1),  FST::RELATION('b',1), \
+	FST::NODE(52,\
+			FST::RELATION('A', 1),  FST::RELATION('B', 1), \
+			FST::RELATION('C', 1),  FST::RELATION('D', 1), \
+			FST::RELATION('E', 1),  FST::RELATION('F', 1), \
+			FST::RELATION('G', 1),  FST::RELATION('H', 1), \
+			FST::RELATION('I', 1),  FST::RELATION('J', 1), \
+			FST::RELATION('K', 1),  FST::RELATION('L', 1), \
+			FST::RELATION('M', 1),  FST::RELATION('N', 1), \
+			FST::RELATION('O', 1),  FST::RELATION('P', 1), \
+			FST::RELATION('Q', 1),  FST::RELATION('R', 1), \
+			FST::RELATION('S', 1),  FST::RELATION('T', 1), \
+			FST::RELATION('U', 1),  FST::RELATION('V', 1), \
+			FST::RELATION('W', 1),  FST::RELATION('X', 1), \
+			FST::RELATION('Y', 1),  FST::RELATION('Z', 1), \
+			FST::RELATION('a', 1),  FST::RELATION('b', 1), \
 			FST::RELATION('c', 1),  FST::RELATION('d', 1), \
 			FST::RELATION('e', 1),  FST::RELATION('f', 1), \
 			FST::RELATION('g', 1),  FST::RELATION('h', 1), \

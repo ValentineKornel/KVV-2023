@@ -1,5 +1,5 @@
 
------------ Протокол ------------ Дата: 17.12.2023 15:25:40 ------------ 
+----------- Протокол ------------ Дата: 17.12.2023 20:13:22 ------------ 
 
 
 ----- Параметры --------
@@ -7,90 +7,325 @@
 -out: example.txt.asm
 -log: example.txt.log
 ---- Исходные данные ------
-Количество символов:  32
+Количество символов: 175
 Проигнорировано:   0
-Количество строк:   3
+Количество строк:  11
 
 ------------------------------ ТАБЛИЦА ЛЕКСЕМ  ------------------------
 
 |  N | ЛЕКСЕМА | СТРОКА | ИНДЕКС В ТИ |
-|  0 |    m    |    1   |             |
-|  1 |    [    |    1   |             |
-|  2 |    n    |    2   |             |
-|  3 |    t    |    2   |             |
-|  4 |    i    |    2   |       0     |
-|  5 |    =    |    2   |             |
-|  6 |    l    |    2   |       1     |
+|  0 |    t    |    1   |             |
+|  1 |    f    |    1   |             |
+|  2 |    i    |    1   |       0     |
+|  3 |    (    |    1   |             |
+|  4 |    )    |    1   |             |
+|  5 |    [    |    1   |             |
+|  6 |    ^    |    2   |             |
 |  7 |    ;    |    2   |             |
-|  8 |    ]    |    3   |             |
+|  8 |    n    |    3   |             |
+|  9 |    t    |    3   |             |
+| 10 |    i    |    3   |       1     |
+| 11 |    =    |    3   |             |
+| 12 |    l    |    3   |       2     |
+| 13 |    ;    |    3   |             |
+| 14 |    o    |    4   |             |
+| 15 |    i    |    4   |       1     |
+| 16 |    ;    |    4   |             |
+| 17 |    e    |    5   |             |
+| 18 |    l    |    5   |       3     |
+| 19 |    ;    |    5   |             |
+| 20 |    ]    |    6   |             |
+| 21 |    p    |    7   |             |
+| 22 |    f    |    7   |             |
+| 23 |    i    |    7   |       4     |
+| 24 |    (    |    7   |             |
+| 25 |    )    |    7   |             |
+| 26 |    [    |    7   |             |
+| 27 |    ^    |    7   |             |
+| 28 |    ;    |    7   |             |
+| 29 |    o    |    7   |             |
+| 30 |    l    |    7   |       5     |
+| 31 |    ;    |    7   |             |
+| 32 |    e    |    7   |             |
+| 33 |    ;    |    7   |             |
+| 34 |    ]    |    7   |             |
+| 35 |    m    |    9   |             |
+| 36 |    [    |    9   |             |
+| 37 |    ]    |   11   |             |
 ---------------------------- ТАБЛИЦА ИДЕНТИФИКАТОРОВ ------------------------
 
 |  N  |СТРОКА В ТЛ| ТИП ИДЕНТИФИКАТОРА |        ИМЯ        | ЗНАЧЕНИЕ (ПАРАМЕТРЫ)
-|   0 |      4    |  number   variable |             mainm |0
-|   1 |      6    | string     literal |             LTRL1 |[4]some
+|   0 |      2    |  number   function |            myNunc |
+|   1 |     10    | string    variable |         myNuncstr |[0]
+|   2 |     12    | string     literal |             LTRL1 |[15]inside function
+|   3 |     18    |  number    literal |             LTRL2 |120
+|   4 |     23    |   proc    function |                me |
+|   5 |     30    | string     literal |             LTRL3 |[16]inside procedure
 
 -------------------------------------------------------------------------
 
 
 -----------------  ЛЕКСЕМЫ СООТВЕТСТВУЮЩИЕ ИСХОДНОМУ КОДУ ---------------------
 
-  1 | m[
-  2 | nti[0]=l[1];
-  3 | ]
+  1 | tfi[0]()[
+  2 | ^;
+  3 | nti[1]=l[2];
+  4 | oi[1];
+  5 | el[3];
+  6 | ]
+  7 | pfi[4]()[^;ol[5];e;]
+  9 | m[
+ 11 | ]
 -------------------------------------------------------------------------
 
 Шаг :Правило             Входная лента                 Стек                
-0   :S->m[K]             m[nti=l;]                     S$                  
+0   :S->tfiPTS           tfi()[^;nti=l;oi;el;]pfi(     S$                  
 1   : SAVESTATE:          1
-1   :                    m[nti=l;]                     m[K]$               
-2   :                    [nti=l;]                      [K]$                
-3   :                    nti=l;]                       K]$                 
-4   :K->nti=V;K          nti=l;]                       K]$                 
-5   : SAVESTATE:          2
-5   :                    nti=l;]                       nti=V;K]$           
-6   :                    ti=l;]                        ti=V;K]$            
-7   :                    i=l;]                         i=V;K]$             
-8   :                    =l;]                          =V;K]$              
-9   :                    l;]                           V;K]$               
-10  :V->l                l;]                           V;K]$               
-11  : SAVESTATE:          3
-11  :                    l;]                           l;K]$               
-12  :                    ;]                            ;K]$                
-13  :                    ]                             K]$                 
-14  : TNS_NORULECHAIN/NS_NORULE
-14  : RESSTATE            
-14  :                    l;]                           V;K]$               
-15  : TNS_NORULECHAIN/NS_NORULE
-15  : RESSTATE            
-15  :                    nti=l;]                       K]$                 
-16  :K->nti;K            nti=l;]                       K]$                 
-17  : SAVESTATE:          2
-17  :                    nti=l;]                       nti;K]$             
-18  :                    ti=l;]                        ti;K]$              
-19  :                    i=l;]                         i;K]$               
-20  :                    =l;]                          ;K]$                
-21  : TS_NOK/NS_NORULECHАIN
-21  : RESSTATE            
-21  :                    nti=l;]                       K]$                 
-22  :K->nti=V;           nti=l;]                       K]$                 
-23  : SAVESTATE:          2
-23  :                    nti=l;]                       nti=V;]$            
-24  :                    ti=l;]                        ti=V;]$             
-25  :                    i=l;]                         i=V;]$              
-26  :                    =l;]                          =V;]$               
-27  :                    l;]                           V;]$                
-28  :V->l                l;]                           V;]$                
-29  : SAVESTATE:          3
-29  :                    l;]                           l;]$                
-30  :                    ;]                            ;]$                 
-31  :                    ]                             ]$                  
-32  :                                                  $                   
-33  : LENTA_END           
-34  : ------>LENTA_END    
+1   :                    tfi()[^;nti=l;oi;el;]pfi(     tfiPTS$             
+2   :                    fi()[^;nti=l;oi;el;]pfi()     fiPTS$              
+3   :                    i()[^;nti=l;oi;el;]pfi()[     iPTS$               
+4   :                    ()[^;nti=l;oi;el;]pfi()[^     PTS$                
+5   :P->(E)              ()[^;nti=l;oi;el;]pfi()[^     PTS$                
+6   : SAVESTATE:          2
+6   :                    ()[^;nti=l;oi;el;]pfi()[^     (E)TS$              
+7   :                    )[^;nti=l;oi;el;]pfi()[^;     E)TS$               
+8   : TNS_NORULECHAIN/NS_NORULE
+8   : RESSTATE            
+8   :                    ()[^;nti=l;oi;el;]pfi()[^     PTS$                
+9   :P->()               ()[^;nti=l;oi;el;]pfi()[^     PTS$                
+10  : SAVESTATE:          2
+10  :                    ()[^;nti=l;oi;el;]pfi()[^     ()TS$               
+11  :                    )[^;nti=l;oi;el;]pfi()[^;     )TS$                
+12  :                    [^;nti=l;oi;el;]pfi()[^;o     TS$                 
+13  :T->[eV;]            [^;nti=l;oi;el;]pfi()[^;o     TS$                 
+14  : SAVESTATE:          3
+14  :                    [^;nti=l;oi;el;]pfi()[^;o     [eV;]S$             
+15  :                    ^;nti=l;oi;el;]pfi()[^;ol     eV;]S$              
+16  : TS_NOK/NS_NORULECHАIN
+16  : RESSTATE            
+16  :                    [^;nti=l;oi;el;]pfi()[^;o     TS$                 
+17  :T->[KeV;]           [^;nti=l;oi;el;]pfi()[^;o     TS$                 
+18  : SAVESTATE:          3
+18  :                    [^;nti=l;oi;el;]pfi()[^;o     [KeV;]S$            
+19  :                    ^;nti=l;oi;el;]pfi()[^;ol     KeV;]S$             
+20  :K->^;K              ^;nti=l;oi;el;]pfi()[^;ol     KeV;]S$             
+21  : SAVESTATE:          4
+21  :                    ^;nti=l;oi;el;]pfi()[^;ol     ^;KeV;]S$           
+22  :                    ;nti=l;oi;el;]pfi()[^;ol;     ;KeV;]S$            
+23  :                    nti=l;oi;el;]pfi()[^;ol;e     KeV;]S$             
+24  :K->nti=V;K          nti=l;oi;el;]pfi()[^;ol;e     KeV;]S$             
+25  : SAVESTATE:          5
+25  :                    nti=l;oi;el;]pfi()[^;ol;e     nti=V;KeV;]S$       
+26  :                    ti=l;oi;el;]pfi()[^;ol;e;     ti=V;KeV;]S$        
+27  :                    i=l;oi;el;]pfi()[^;ol;e;]     i=V;KeV;]S$         
+28  :                    =l;oi;el;]pfi()[^;ol;e;]m     =V;KeV;]S$          
+29  :                    l;oi;el;]pfi()[^;ol;e;]m[     V;KeV;]S$           
+30  :V->l                l;oi;el;]pfi()[^;ol;e;]m[     V;KeV;]S$           
+31  : SAVESTATE:          6
+31  :                    l;oi;el;]pfi()[^;ol;e;]m[     l;KeV;]S$           
+32  :                    ;oi;el;]pfi()[^;ol;e;]m[]     ;KeV;]S$            
+33  :                    oi;el;]pfi()[^;ol;e;]m[]      KeV;]S$             
+34  :K->oV;K             oi;el;]pfi()[^;ol;e;]m[]      KeV;]S$             
+35  : SAVESTATE:          7
+35  :                    oi;el;]pfi()[^;ol;e;]m[]      oV;KeV;]S$          
+36  :                    i;el;]pfi()[^;ol;e;]m[]       V;KeV;]S$           
+37  :V->i                i;el;]pfi()[^;ol;e;]m[]       V;KeV;]S$           
+38  : SAVESTATE:          8
+38  :                    i;el;]pfi()[^;ol;e;]m[]       i;KeV;]S$           
+39  :                    ;el;]pfi()[^;ol;e;]m[]        ;KeV;]S$            
+40  :                    el;]pfi()[^;ol;e;]m[]         KeV;]S$             
+41  : TNS_NORULECHAIN/NS_NORULE
+41  : RESSTATE            
+41  :                    i;el;]pfi()[^;ol;e;]m[]       V;KeV;]S$           
+42  : TNS_NORULECHAIN/NS_NORULE
+42  : RESSTATE            
+42  :                    oi;el;]pfi()[^;ol;e;]m[]      KeV;]S$             
+43  :K->oV;              oi;el;]pfi()[^;ol;e;]m[]      KeV;]S$             
+44  : SAVESTATE:          7
+44  :                    oi;el;]pfi()[^;ol;e;]m[]      oV;eV;]S$           
+45  :                    i;el;]pfi()[^;ol;e;]m[]       V;eV;]S$            
+46  :V->i                i;el;]pfi()[^;ol;e;]m[]       V;eV;]S$            
+47  : SAVESTATE:          8
+47  :                    i;el;]pfi()[^;ol;e;]m[]       i;eV;]S$            
+48  :                    ;el;]pfi()[^;ol;e;]m[]        ;eV;]S$             
+49  :                    el;]pfi()[^;ol;e;]m[]         eV;]S$              
+50  :                    l;]pfi()[^;ol;e;]m[]          V;]S$               
+51  :V->l                l;]pfi()[^;ol;e;]m[]          V;]S$               
+52  : SAVESTATE:          9
+52  :                    l;]pfi()[^;ol;e;]m[]          l;]S$               
+53  :                    ;]pfi()[^;ol;e;]m[]           ;]S$                
+54  :                    ]pfi()[^;ol;e;]m[]            ]S$                 
+55  :                    pfi()[^;ol;e;]m[]             S$                  
+56  :S->pfiPGS           pfi()[^;ol;e;]m[]             S$                  
+57  : SAVESTATE:          10
+57  :                    pfi()[^;ol;e;]m[]             pfiPGS$             
+58  :                    fi()[^;ol;e;]m[]              fiPGS$              
+59  :                    i()[^;ol;e;]m[]               iPGS$               
+60  :                    ()[^;ol;e;]m[]                PGS$                
+61  :P->(E)              ()[^;ol;e;]m[]                PGS$                
+62  : SAVESTATE:          11
+62  :                    ()[^;ol;e;]m[]                (E)GS$              
+63  :                    )[^;ol;e;]m[]                 E)GS$               
+64  : TNS_NORULECHAIN/NS_NORULE
+64  : RESSTATE            
+64  :                    ()[^;ol;e;]m[]                PGS$                
+65  :P->()               ()[^;ol;e;]m[]                PGS$                
+66  : SAVESTATE:          11
+66  :                    ()[^;ol;e;]m[]                ()GS$               
+67  :                    )[^;ol;e;]m[]                 )GS$                
+68  :                    [^;ol;e;]m[]                  GS$                 
+69  :G->[e;]             [^;ol;e;]m[]                  GS$                 
+70  : SAVESTATE:          12
+70  :                    [^;ol;e;]m[]                  [e;]S$              
+71  :                    ^;ol;e;]m[]                   e;]S$               
+72  : TS_NOK/NS_NORULECHАIN
+72  : RESSTATE            
+72  :                    [^;ol;e;]m[]                  GS$                 
+73  :G->[Ke;]            [^;ol;e;]m[]                  GS$                 
+74  : SAVESTATE:          12
+74  :                    [^;ol;e;]m[]                  [Ke;]S$             
+75  :                    ^;ol;e;]m[]                   Ke;]S$              
+76  :K->^;K              ^;ol;e;]m[]                   Ke;]S$              
+77  : SAVESTATE:          13
+77  :                    ^;ol;e;]m[]                   ^;Ke;]S$            
+78  :                    ;ol;e;]m[]                    ;Ke;]S$             
+79  :                    ol;e;]m[]                     Ke;]S$              
+80  :K->oV;K             ol;e;]m[]                     Ke;]S$              
+81  : SAVESTATE:          14
+81  :                    ol;e;]m[]                     oV;Ke;]S$           
+82  :                    l;e;]m[]                      V;Ke;]S$            
+83  :V->l                l;e;]m[]                      V;Ke;]S$            
+84  : SAVESTATE:          15
+84  :                    l;e;]m[]                      l;Ke;]S$            
+85  :                    ;e;]m[]                       ;Ke;]S$             
+86  :                    e;]m[]                        Ke;]S$              
+87  : TNS_NORULECHAIN/NS_NORULE
+87  : RESSTATE            
+87  :                    l;e;]m[]                      V;Ke;]S$            
+88  : TNS_NORULECHAIN/NS_NORULE
+88  : RESSTATE            
+88  :                    ol;e;]m[]                     Ke;]S$              
+89  :K->oV;              ol;e;]m[]                     Ke;]S$              
+90  : SAVESTATE:          14
+90  :                    ol;e;]m[]                     oV;e;]S$            
+91  :                    l;e;]m[]                      V;e;]S$             
+92  :V->l                l;e;]m[]                      V;e;]S$             
+93  : SAVESTATE:          15
+93  :                    l;e;]m[]                      l;e;]S$             
+94  :                    ;e;]m[]                       ;e;]S$              
+95  :                    e;]m[]                        e;]S$               
+96  :                    ;]m[]                         ;]S$                
+97  :                    ]m[]                          ]S$                 
+98  :                    m[]                           S$                  
+99  :S->m[K]             m[]                           S$                  
+100 : SAVESTATE:          16
+100 :                    m[]                           m[K]$               
+101 :                    []                            [K]$                
+102 :                    ]                             K]$                 
+103 : TNS_NORULECHAIN/NS_NORULE
+103 : RESSTATE            
+103 :                    m[]                           S$                  
+104 : TNS_NORULECHAIN/NS_NORULE
+104 : RESSTATE            
+104 :                    l;e;]m[]                      V;e;]S$             
+105 : TNS_NORULECHAIN/NS_NORULE
+105 : RESSTATE            
+105 :                    ol;e;]m[]                     Ke;]S$              
+106 : TNS_NORULECHAIN/NS_NORULE
+106 : RESSTATE            
+106 :                    ^;ol;e;]m[]                   Ke;]S$              
+107 :K->^;               ^;ol;e;]m[]                   Ke;]S$              
+108 : SAVESTATE:          13
+108 :                    ^;ol;e;]m[]                   ^;e;]S$             
+109 :                    ;ol;e;]m[]                    ;e;]S$              
+110 :                    ol;e;]m[]                     e;]S$               
+111 : TS_NOK/NS_NORULECHАIN
+111 : RESSTATE            
+111 :                    ^;ol;e;]m[]                   Ke;]S$              
+112 : TNS_NORULECHAIN/NS_NORULE
+112 : RESSTATE            
+112 :                    [^;ol;e;]m[]                  GS$                 
+113 : TNS_NORULECHAIN/NS_NORULE
+113 : RESSTATE            
+113 :                    ()[^;ol;e;]m[]                PGS$                
+114 : TNS_NORULECHAIN/NS_NORULE
+114 : RESSTATE            
+114 :                    pfi()[^;ol;e;]m[]             S$                  
+115 : TNS_NORULECHAIN/NS_NORULE
+115 : RESSTATE            
+115 :                    l;]pfi()[^;ol;e;]m[]          V;]S$               
+116 : TNS_NORULECHAIN/NS_NORULE
+116 : RESSTATE            
+116 :                    i;el;]pfi()[^;ol;e;]m[]       V;eV;]S$            
+117 : TNS_NORULECHAIN/NS_NORULE
+117 : RESSTATE            
+117 :                    oi;el;]pfi()[^;ol;e;]m[]      KeV;]S$             
+118 : TNS_NORULECHAIN/NS_NORULE
+118 : RESSTATE            
+118 :                    l;oi;el;]pfi()[^;ol;e;]m[     V;KeV;]S$           
+119 : TNS_NORULECHAIN/NS_NORULE
+119 : RESSTATE            
+119 :                    nti=l;oi;el;]pfi()[^;ol;e     KeV;]S$             
+120 :K->nti;K            nti=l;oi;el;]pfi()[^;ol;e     KeV;]S$             
+121 : SAVESTATE:          5
+121 :                    nti=l;oi;el;]pfi()[^;ol;e     nti;KeV;]S$         
+122 :                    ti=l;oi;el;]pfi()[^;ol;e;     ti;KeV;]S$          
+123 :                    i=l;oi;el;]pfi()[^;ol;e;]     i;KeV;]S$           
+124 :                    =l;oi;el;]pfi()[^;ol;e;]m     ;KeV;]S$            
+125 : TS_NOK/NS_NORULECHАIN
+125 : RESSTATE            
+125 :                    nti=l;oi;el;]pfi()[^;ol;e     KeV;]S$             
+126 :K->nti=V;           nti=l;oi;el;]pfi()[^;ol;e     KeV;]S$             
+127 : SAVESTATE:          5
+127 :                    nti=l;oi;el;]pfi()[^;ol;e     nti=V;eV;]S$        
+128 :                    ti=l;oi;el;]pfi()[^;ol;e;     ti=V;eV;]S$         
+129 :                    i=l;oi;el;]pfi()[^;ol;e;]     i=V;eV;]S$          
+130 :                    =l;oi;el;]pfi()[^;ol;e;]m     =V;eV;]S$           
+131 :                    l;oi;el;]pfi()[^;ol;e;]m[     V;eV;]S$            
+132 :V->l                l;oi;el;]pfi()[^;ol;e;]m[     V;eV;]S$            
+133 : SAVESTATE:          6
+133 :                    l;oi;el;]pfi()[^;ol;e;]m[     l;eV;]S$            
+134 :                    ;oi;el;]pfi()[^;ol;e;]m[]     ;eV;]S$             
+135 :                    oi;el;]pfi()[^;ol;e;]m[]      eV;]S$              
+136 : TS_NOK/NS_NORULECHАIN
+136 : RESSTATE            
+136 :                    l;oi;el;]pfi()[^;ol;e;]m[     V;eV;]S$            
+137 : TNS_NORULECHAIN/NS_NORULE
+137 : RESSTATE            
+137 :                    nti=l;oi;el;]pfi()[^;ol;e     KeV;]S$             
+138 :K->nti;             nti=l;oi;el;]pfi()[^;ol;e     KeV;]S$             
+139 : SAVESTATE:          5
+139 :                    nti=l;oi;el;]pfi()[^;ol;e     nti;eV;]S$          
+140 :                    ti=l;oi;el;]pfi()[^;ol;e;     ti;eV;]S$           
+141 :                    i=l;oi;el;]pfi()[^;ol;e;]     i;eV;]S$            
+142 :                    =l;oi;el;]pfi()[^;ol;e;]m     ;eV;]S$             
+143 : TS_NOK/NS_NORULECHАIN
+143 : RESSTATE            
+143 :                    nti=l;oi;el;]pfi()[^;ol;e     KeV;]S$             
+144 : TNS_NORULECHAIN/NS_NORULE
+144 : RESSTATE            
+144 :                    ^;nti=l;oi;el;]pfi()[^;ol     KeV;]S$             
+145 :K->^;               ^;nti=l;oi;el;]pfi()[^;ol     KeV;]S$             
+146 : SAVESTATE:          4
+146 :                    ^;nti=l;oi;el;]pfi()[^;ol     ^;eV;]S$            
+147 :                    ;nti=l;oi;el;]pfi()[^;ol;     ;eV;]S$             
+148 :                    nti=l;oi;el;]pfi()[^;ol;e     eV;]S$              
+149 : TS_NOK/NS_NORULECHАIN
+149 : RESSTATE            
+149 :                    ^;nti=l;oi;el;]pfi()[^;ol     KeV;]S$             
+150 : TNS_NORULECHAIN/NS_NORULE
+150 : RESSTATE            
+150 :                    [^;nti=l;oi;el;]pfi()[^;o     TS$                 
+151 : TNS_NORULECHAIN/NS_NORULE
+151 : RESSTATE            
+151 :                    ()[^;nti=l;oi;el;]pfi()[^     PTS$                
+152 : TNS_NORULECHAIN/NS_NORULE
+152 : RESSTATE            
+152 :                    tfi()[^;nti=l;oi;el;]pfi(     S$                  
+153 : TNS_NORULECHAIN/NS_NORULE
+154 : ------>NS_NORULE    
 -------------------------------------------------------------------------------------
-0   :всего строк 9, синтаксический анализ выполнен без ошибок 
-0   : S->m[K]             
-2   : K->nti=V;           
-6   : V->l                
-
-Ошибка N314: Семантическая ошибка: Типы данных в выражении не совпадают Строка: 2Обнаружены семантические ошибки 
+Ошибка 614: строка 11, Синтаксическая ошибка: Недопустимая синтаксическая конструкция
+Ошибка 600: строка 9, Синтаксическая ошибка: Неверная структура программы
+Ошибка 612: строка 7, Синтаксическая ошибка: Неверное выражение. Ожидаются только идентификаторы/литералы
+Синтаксический анализ завершен с ошибками 
